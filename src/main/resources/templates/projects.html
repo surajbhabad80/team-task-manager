@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Projects</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+
+    <h2>Projects</h2>
+
+    <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+    <a href="/projects/add" class="btn btn-primary">Add Project</a>
+
+    <table class="table table-bordered mt-3">
+        <tr>
+            <th>ID</th>
+            <th>Project Name</th>
+            <th>Description</th>
+        </tr>
+
+        <tr th:each="project : ${projects}">
+            <td th:text="${project.id}"></td>
+            <td th:text="${project.projectName}"></td>
+            <td th:text="${project.description}"></td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>

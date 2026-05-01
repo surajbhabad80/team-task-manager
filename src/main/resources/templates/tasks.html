@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tasks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+
+    <h2>Tasks</h2>
+
+    <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+    <a href="/tasks/add" class="btn btn-success" th:if="${role == 'ADMIN'}">Add Task</a>
+
+    <table class="table table-bordered mt-3">
+        <tr>
+            <th>Title</th>
+            <th>Project</th>
+            <th>Assigned To</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Update Status</th>
+        </tr>
+
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.title}"></td>
+            <td th:text="${task.project.projectName}"></td>
+            <td th:text="${task.assignedUser.name}"></td>
+            <td th:text="${task.status}"></td>
+            <td th:text="${task.dueDate}"></td>
+            <td>
+                <form th:action="@{/tasks/update-status/{id}(id=${task.id})}" method="post">
+                    <select name="status" class="form-control">
+                        <option value="PENDING" th:selected="${task.status == 'PENDING'}">PENDING</option>
+                        <option value="IN_PROGRESS" th:selected="${task.status == 'IN_PROGRESS'}">IN_PROGRESS</option>
+                        <option value="COMPLETED" th:selected="${task.status == 'COMPLETED'}">COMPLETED</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary mt-1">Update</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>

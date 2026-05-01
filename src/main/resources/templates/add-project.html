@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5 col-md-5">
+
+    <h2>Add Project</h2>
+
+    <form th:action="@{/projects/add}" method="post" th:object="${project}">
+        <input type="text" th:field="*{projectName}" class="form-control mb-3" placeholder="Project Name" required>
+        <textarea th:field="*{description}" class="form-control mb-3" placeholder="Description"></textarea>
+
+        <button class="btn btn-primary">Save Project</button>
+    </form>
+
+</div>
+</body>
+</html>
