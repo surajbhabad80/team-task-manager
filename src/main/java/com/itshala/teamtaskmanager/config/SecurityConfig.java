@@ -41,21 +41,30 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
+
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable())
+                )
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/register", "/login").permitAll()
-                        .requestMatchers("/projects/add", "/tasks/add").hasRole("ADMIN")
-                        .requestMatchers("/tasks/update-status/**").hasAnyRole("ADMIN", "MEMBER")
+                        .requestMatchers("/", "/register", "/login", "/h2-console/**").permitAll()
+                        .requestMatchers("/projects/add", "/projects/delete/**").hasRole("ADMIN")
+                        .requestMatchers("/tasks/add", "/tasks/delete/**").hasRole("ADMIN")
+                        .requestMatchers("/tasks/status/**").hasAnyRole("ADMIN", "MEMBER")
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(login -> login
                         .loginPage("/login")
+                        .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/dashboard", true)
                         .usernameParameter("email")
                         .permitAll()
                 )
+
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login")
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
 
